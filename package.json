@@ -1,6 +1,6 @@
 {
   "name": "node-stats-collector",
-  "version": "0.9.1",
+  "version": "0.9.3",
   "description": "class to push then get some node stats, may be used to analyse application status",
   "main": "index.js",
   "scripts": {
