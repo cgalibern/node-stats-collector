@@ -1,0 +1,11 @@
+{
+  "name": "node-stats-collector",
+  "version": "0.9.1",
+  "description": "class to push then get some node stats, may be used to analyse application status",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "cganpm@free.fr",
+  "license": "MIT"
+}
