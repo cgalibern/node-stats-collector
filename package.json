@@ -6,6 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+      "type": "git",
+      "url": "git+https://github.com/cgalibern/node-stats-collector.git"
+  },
   "author": "cganpm@free.fr",
   "license": "MIT"
 }
