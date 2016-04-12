@@ -1,5 +1,7 @@
 'use strict'
 
+const os = require('os')
+
 class Stat {
   constructor (name) {
     this._name = name
@@ -47,17 +49,60 @@ class Stat {
     }, interval)
   }
 
-  reportStats (interval, fn) {
+  reportStats (interval, decimalLength, fn) {
+    if (!fn) {
+      fn = decimalLength
+      decimalLength = 2
+    }
     setInterval(() => {
       let stat = {}
       for (let statname of this.list()) {
         let value = this[this._methods[statname]](statname)
-        stat[statname] = value
+        stat[statname] = value.toFixed(decimalLength)
         this.reset(statname)
       }
       fn(stat)
     }, interval)
   }
+
+  initLoadAvg (interval) {
+    this.declare('load1', 'avg')
+    this.declare('load5', 'avg')
+    this.declare('load15', 'avg')
+    setInterval(() => {
+      let loadAvg = os.loadavg()
+      this.pushStat('load1', loadAvg[0])
+      this.pushStat('load5', loadAvg[1])
+      this.pushStat('load15', loadAvg[2])
+    }, interval)
+  }
+
+  initFreeMem (interval, unit) {
+    if (!unit) {
+      // default unit to 1KB
+      unit = 1e3
+    }
+    let statname = 'freeMem'
+    this.declare(statname, 'avg')
+    setInterval(() => {
+      let value = os.freemem() / unit
+      this.pushStat(statname, value)
+    }, interval)
+  }
+
+  initTotalMem (interval, unit) {
+    if (!unit) {
+      // default unit to 1KB
+      unit = 1e3
+    }
+    let statname = 'totalMem'
+    this.declare(statname, 'avg')
+    setInterval(() => {
+      let value = os.totalmem() / unit
+      this.pushStat(statname, value)
+    }, interval)
+  }
+
 }
 
 module.exports = {
